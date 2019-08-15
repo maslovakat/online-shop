@@ -4,22 +4,24 @@ class ProductList {
     fetch(productsUrl)
       .then(result => result.json())
       .then(products => {
-        // this.products = products.sort( (a,b) => b.price - a.price);
+        const sorted = document.querySelector('.sorted-by');
+        sorted.addEventListener('change', sortedTo(products));
+        function sortedTo(products) {
+          console.log(sorted.value);
+          sorted.value === "lowest" ? products.sort( (a,b) => a.price - b.price) : products.sort( (a,b) => b.price - a.price);
+        }
+        this.products = products;
         this.renderProducts(renderContainer, this.products);
         this.addEventListeners();
       });
   }
-  document.querySelector('.sorted-by').addEventListeners('onchange', function(){
-    this.value === "lowest" ? products.sort( (a,b) => a.price - b.price) : products.sort( (a,b) => b.price - a.price);
-  })
 
   getProductById(id) {
     return this.products.find(el => el.id === id);
   }
   renderProducts(container, products) {
     let productListDomString = '';
-    products
-      .forEach(product => {
+    products.forEach(product => {
       productListDomString += `<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                   <div class="card product">
                     <img class="card-img-top" src="img/products/${
