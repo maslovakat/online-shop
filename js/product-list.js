@@ -8,7 +8,7 @@ class ProductList {
         sorted.addEventListener('change', sortedTo(products));
         function sortedTo(products) {
           console.log(sorted.value);
-          sorted.value === "lowest" ? products.sort( (a,b) => a.price - b.price) : products.sort( (a,b) => b.price - a.price);
+          sorted.value === "lowest" ? products.sort( (a,b) => b.price - a.price) : products.sort( (a,b) => a.price - b.price);
         }
         this.products = products;
         this.renderProducts(renderContainer, this.products);
