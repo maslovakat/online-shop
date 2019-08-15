@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Online shop Vydelka</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/lux-bootstrap.min.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
 
@@ -31,7 +31,7 @@
                 </ul>
                 <div>
                     <a class="nav-link" href="#cartModal" data-toggle="modal">
-                      <i class="fas fa-shopping-cart"></i>
+                      <i class="fas fa-shopping-basket"></i>
                         Cart<span id="cart-badge" class="badge badge-light"></span>
                     </a>
                 </div>
@@ -76,6 +76,16 @@
         </div>
         <section>
             <h2 id="products">Products</h2>
+
+            <label for="">Sorted by
+              <select class="sorted-by" name="" id="">
+                <option value="lowest">price to lowest</option>
+                <option value="highest">price to highest</option>
+              </select>
+            </label>
+            <label for="">Filter
+              <input type="text">
+            </label>
             <div class="row products-container">
                <!--Products are dynamically generated here-->
             </div>
