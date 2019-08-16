@@ -9,6 +9,7 @@ class ProductList {
         function sortedTo(products) {
           console.log(sorted.value);
           sorted.value === "lowest" ? products.sort( (a,b) => b.price - a.price) : products.sort( (a,b) => a.price - b.price);
+          renderProducts(renderContainer, this.products);
         }
         this.products = products;
         this.renderProducts(renderContainer, this.products);
@@ -49,6 +50,7 @@ class ProductList {
   }
   addEventListeners() {
     $('#productInfoModal').on('show.bs.modal', event => {
+    
       const button = $(event.relatedTarget); // Button that triggered the modal
       const id = String(button.data('id')); // Extract info from data-* attributes
       const product = this.getProductById(id);
@@ -69,6 +71,6 @@ class ProductList {
       const id = button.data('id');
       this.cart.addProduct(id);
       window.showAlert('Product added to cart');
-    });
+    }); 
   }
 }
