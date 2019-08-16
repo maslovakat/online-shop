@@ -86,6 +86,16 @@
             <label for="">Filter
               <input type="text">
             </label>
+            <label>
+              Convert To:
+              <select name="curr-to" class="curr-to" required>
+                  <option value="USD" selected>USD</option>
+                  <option value="RUB">RUB</option>
+                  <option value="UAH">UAH</option>
+                  <option value="EUR">EUR</option>
+              </select>
+          </label>
+          <input class="convert" type="submit" value="Convert">
             <div class="row products-container">
                <!--Products are dynamically generated here-->
             </div>

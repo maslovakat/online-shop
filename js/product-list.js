@@ -7,10 +7,14 @@ class ProductList {
         const sorted = document.querySelector('.sorted-by');
         sorted.addEventListener('change', sortedTo(products));
         function sortedTo(products) {
-          console.log(sorted.value);
-          sorted.value === "lowest" ? products.sort( (a,b) => b.price - a.price) : products.sort( (a,b) => a.price - b.price);
-          renderProducts(renderContainer, this.products);
+          // console.log(sorted.value);
+          sorted.value === 'lowest'
+            ? products.sort((a, b) => b.price - a.price)
+            : products.sort((a, b) => a.price - b.price);
+          // renderProducts(renderContainer, this.products);
         }
+        document.querySelector('.convert').addEventListener('click', currConvert);
+
         this.products = products;
         this.renderProducts(renderContainer, this.products);
         this.addEventListeners();
@@ -40,7 +44,7 @@ class ProductList {
                       <button class="btn btn-primary buy" data-id="${
                         product.id
                       }">
-                        $${product.price} - Buy
+                      ${product.currency} ${product.price} - Buy
                       </button>
                     </div>
                   </div>
@@ -50,7 +54,6 @@ class ProductList {
   }
   addEventListeners() {
     $('#productInfoModal').on('show.bs.modal', event => {
-    
       const button = $(event.relatedTarget); // Button that triggered the modal
       const id = String(button.data('id')); // Extract info from data-* attributes
       const product = this.getProductById(id);
@@ -71,6 +74,37 @@ class ProductList {
       const id = button.data('id');
       this.cart.addProduct(id);
       window.showAlert('Product added to cart');
-    }); 
+    });
   }
+}
+
+// document
+//           .querySelector('.convert')
+//           .addEventListener('click', currConvert);
+function currConvert(e) {
+  e.preventDefault();
+  fetch('./products.json')
+    .then(response => {
+      return response.json();
+    })
+    .then(product => {
+      for (let i = 0; i < product.length; i++) {
+        const currFrom = product[i].currency;
+        const currTo = document.querySelector('.curr-to').value;
+        const currKey = currFrom + '_' + currTo;
+        fetch(
+          `https://free.currconv.com/api/v7/convert?q=${currKey}&compact=ultra&apiKey=8120039e1d66bfa43c62`
+        )
+          .then(response => response.json())
+          .then(currency => {
+            const rate = currency[currKey];
+            const sourceAmount = product[i].price;
+            const convertedAmount = rate * sourceAmount;
+            product[i].price = convertedAmount.toFixed(2);
+            product[i].currency = currTo;
+            console.log(convertedAmount);
+          });
+      }
+      return product;
+    });
 }
